@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nc4hsearch</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/css/user.css">
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>PP: Search For User Data</h1></div>
+        <div class="row">
+            <div class="col-md-12">
+                <select class="input-lg form-control" name="nc4her">
+                    <optgroup label="NC4H">
+                        <option value="Sarah Kotzian" selected="">Sarah Kotzian</option>
+                        <option value="Amy Chilcote" selected="">Amy Chilcote</option>
+                        <option value="David Herpy - Larry Hancock">David Herpy - Larry Hancock</option>
+                        <option value="Michael Yoder">Michael Yoder</option>
+                        <option value="Salim Oden">Salim Oden</option>
+                        <option value="Shannon McCollum">Shannon McCollum</option>
+                        <option value="Mitzi Downing">Mitzi Downing</option>
+                    </optgroup>
+                </select>
+                <button class="btn btn-default btn-block btn-lg" type="button" onclick="search()">Search </button>
+                <script type="text/javascript">
+                function search() {
+               		  if (window.XMLHttpRequest) {
+               		    xmlhttp=new XMLHttpRequest();
+               		  } else { 
+               		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+               		  }
+               		  xmlhttp.onreadystatechange=function() {
+               		    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+               		    	if (xmlhttp.responseText.length > 0){
+               		    	 	$('li').remove();
+                    		    $("ul#results").append(xmlhttp.responseText);
+               		    	}
+               		    }
+               		  }
+               		  xmlhttp.open("GET","/finddata?nc4her="+$('select[name=nc4her]').val(),true);
+               		  xmlhttp.send();
+               		}
+                </script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group" id="results">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

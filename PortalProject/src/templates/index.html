@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nc4h</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/css/user.css">
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid 4h-container">
+        <div class="row header">
+            <div class="col-md-12">
+                <h1><img src="../static/assets/img/210965.png" class="header-image">NC4H - Portal Project<img src="../static/assets/img/ncstate.png" class="header-image"></h1></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="4hform" action="/sendtogreg/" method="post">
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label>Select Your Name</label>
+                            <select class="form-control" name="nc4her">
+                                <optgroup label="NC4H">
+                                    <option value="Sarah Kotzian">Sarah Kotzian</option>
+                                    <option value="Amy Chilcote" selected>Amy Chilcote</option>
+                                    <option value="David Herpy Larry Hancock">David Herpy Larry Hancock</option>
+                                    <option value="Michael Yoder">Michael Yoder</option>
+                                    <option value="Salim Oden">Salim Oden</option>
+                                    <option value="Shannon McCollum">Shannon McCollum</option>
+                                    <option value="Mitzi Downing">Mitzi Downing</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                            <div class="row">
+                                <div class="col-md-offset-4 col-sm-offset-3">
+                                    <label class="wtd">What do you want to do?</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 action-options">
+                                    <input id="action" type="radio" name="wtd" value="transfer">
+                                    <label>Transfer </label>
+                                </div>
+                                <div class="col-md-6 action-options">
+                                    <input id="action" type="radio" name="wtd" value="add">
+                                    <label>Add </label>
+                                </div>
+                                <script type="text/javascript">
+                                	$("input[type='radio']").click(function(){
+                                		if($(this).val() === "add"){
+                                			$("input[type='url']#transferurl").prop('disabled',true);
+                                			$("button#accept").prop('disabled',true);
+                                			$("input[type='text']#pagename").prop('readonly',false);
+                                		} else {
+                                			$("input[type='url']#transferurl").prop('disabled',false);
+                                			$("button#accept").prop('disabled',false);
+                                			$("input[type='text']#pagename").prop('readonly',true);
+                                		}
+                                	});
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label>URL To Transfer From (Transfer Selection Only)</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span>URL </span></div>
+                                <input class="form-control input-lg" type="url" id="transferurl" name="transferurl" placeholder="http://www.example.com/path/to/page" disabled="disabled">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-lg" type="button" onclick="getTitle()" id="accept" disabled="disabled">Accept </button>
+                                </div>
+                                <script type="text/javascript">
+                                function getTitle() {
+                                 	  if ($("input[type='url']#transferurl").val().length ==0) {
+                              		    	$("input[type='text']#pagename").val("");
+                                 		    return;
+                                 		  }
+                                 		  if (window.XMLHttpRequest) {
+                                 		    xmlhttp=new XMLHttpRequest();
+                                 		  } else { 
+                                 		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                                 		  }
+                                 		  xmlhttp.onreadystatechange=function() {
+                                 		    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                                 		    	if (xmlhttp.responseText.length > 0){
+                                      		    	$("input[type='text']#pagename").val(xmlhttp.responseText);
+                                 		    	}
+                                 		    }
+                                 		  }
+                                 		  xmlhttp.open("GET","/getname/?transferurl="+$("input[type='url']#transferurl").val(),true);
+                                 		  xmlhttp.send();
+                                 		}
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>What do you want to Transfer or Add? </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="checkbox" value="everything" id="everything" class="transfercheckbox"><span> Everything </span></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="checkbox" value="text" id="text" class="transfercheckbox"><span> Text </span></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="checkbox" value="media" id="media" class="transfercheckbox"><span> Media </span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <input type="checkbox" value="links" id="links" class="transfercheckbox"><span> Links </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                    	$("input[type='checkbox'].transfercheckbox").click(function(){
+                    		if($(this).val() == "everything"){
+                    			if($(this).is(':checked')){
+	                    			$("textarea#textsource").prop('disabled',false);
+	                    			$("input[type='url']#medialink").prop('disabled',false);
+	                    			$("button#moremedia").prop('disabled',false);
+	                    			$("input[type='url']#otherlink").prop('disabled',false);
+	                    			$("button#moreother").prop('disabled',false);
+	                    			$("input[type='checkbox']#text").prop('checked',true);
+	                    			$("input[type='checkbox']#media").prop('checked',true);
+	                    			$("input[type='checkbox']#links").prop('checked',true);
+                    			} else {
+                    				$("textarea#textsource").prop('disabled',true);
+	                    			$("input[type='url']#medialink").prop('disabled',true);
+	                    			$("button#moremedia").prop('disabled',true);
+	                    			$("input[type='url']#otherlink").prop('disabled',true);
+	                    			$("button#moreother").prop('disabled',true);
+	                    			$("input[type='checkbox']#text").prop('checked',false);
+	                    			$("input[type='checkbox']#media").prop('checked',false);
+	                    			$("input[type='checkbox']#links").prop('checked',false);
+                    			}
+                    		}
+                    		if($(this).val() == "text"){
+                    			if($(this).is(':checked')){
+	                    			$("textarea#textsource").prop('disabled',false);
+                    			} else {
+	                    			$("textarea#textsource").prop('disabled',true);
+                    			}
+                    		}
+							if($(this).val() == "media"){
+								if($(this).is(':checked')){
+									$("input[type='url']#medialink").prop('disabled',false);
+	                    			$("button#moremedia").prop('disabled',false);
+                    			} else {
+                    				$("input[type='url']#medialink").prop('disabled',true);
+	                    			$("button#moremedia").prop('disabled',true);
+                    			}
+                    		}
+							if($(this).val() == "links"){
+								if($(this).is(':checked')){
+									$("input[type='url']#otherlink").prop('disabled',false);
+	                    			$("button#moreother").prop('disabled',false);
+                    			} else {
+                    				$("input[type='url']#otherlink").prop('disabled',true);
+	                    			$("button#moreother").prop('disabled',true);
+                    			}
+							}
+                    	});
+                    </script>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Text (Source)</label>
+                                </div>
+                            </div>
+                            <textarea class="form-control" name="textsource" id="textsource" disabled="disabled"></textarea>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Images/Videos </label>
+                                    <p>If you have the original video or image that you want to place on this webpage, please go <a class="text-uppercase text-success bg-success" href="https://drive.google.com/folderview?id=0BxHVNZhvggB_RlYyY3RBS0hJUTQ&amp;usp=sharing"
+                                        target="_blank">HERE </a> and locate the folder with your name and add it to your drive. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label>PAGE NAME (If transfer, this will be filled for you)</label>
+                            <input class="form-control input-lg" type="text" name="pagename" id="pagename" readonly="readonly">
+                        </div>
+                        <div class="col-md-6">
+                            <p>Take the (PAGE NAME) to the left and create a folder with this name so I can know exactly where this media will belong. If you have a link to the media then, just copy and past those links into the individual boxes below, if
+                                you want to add more than one just click the plus button and you will be able to add more links. </p>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Media Links</label>
+                            <input class="form-control input-lg" type="url" name="medialink" id="medialink" placeholder="http://www.example.com/link/to/media" disabled="disabled">
+                            <button class="btn btn-default form-control" id="moremedia" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                        <script type="text/javascript">
+                        	$('button#moremedia').click(function(){
+                                var n = $("input[type='url']#medialink").length;
+                        		$("<input class='form-control input-lg' type='url' name='medialink"+n+"' id='medialink"+n+"' placeholder='http://www.example.com/link/to/media'>").insertAfter("input[type='url']#medialink");
+                        	});
+                        </script>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Other Links (These are just links to external locations, add more as necessary for this page)</label>
+                            <input class="form-control input-lg" type="url" name="otherlink" id="otherlink" placeholder="http://www.example.com/link/to/external/media" disabled="disabled">
+                            <button class="btn btn-default form-control" id="moreother" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                         <script type="text/javascript">
+                        	$('button#moreother').click(function(){
+                                var n = $("input[type='url']#otherlink").length;
+                        		$("<input class='form-control input-lg' type='url' name='otherlink"+n+"' id='otherlink"+n+"' placeholder='http://www.example.com/link/to/external/media'>").insertAfter("input[type='url']#otherlink");
+                        	});
+                        </script>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Notes (Give me any thing specific that you would like to see on this page)</label>
+                            <textarea class="form-control" rows="6" name="notes" placeholder="Additional Notes..."></textarea>
+                            <input class="btn btn-default form-control" type="submit" value="Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+
+    	});
+    </script>
+</body>
+
+</html>

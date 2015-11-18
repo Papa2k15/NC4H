@@ -1,0 +1,38 @@
+textarea{
+  width:100%;
+}
+
+h3{
+  background-color:black;
+  color:white;
+  border-bottom:2px solid red;
+}
+
+h1{
+  color:white;
+  border-bottom:2px solid red;
+}
+
+h4{
+  color:green;
+}
+
+body{
+  background-image:url(../../../static/assets/img/4H-clover-color.png);
+  background-color:black;
+  background-position: center;
+  background-repeat:no-repeat;
+  z-index:-1;
+}
+
+div.container.back{
+  position:static;
+  display:block;
+  background-color:rgba(0,0,0,.7);
+  z-index:0;
+}
+
+div.container{
+  z-index:1;
+}
+

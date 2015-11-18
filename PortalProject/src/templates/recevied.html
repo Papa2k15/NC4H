@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nc4hrecieve</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/css/guser.css">
+</head>
+
+<body>
+    <div class="container back">
+        <h1>Received From: {{nc4her}}</h1>
+        <h3>Page Name: {{pagename}} </h3>
+        <h4>Method Type: {{wtd}}</h4>
+        <hr>
+        <h3>Text Source</h3>
+        <textarea rows="15" name="textsource">{{textsource}}</textarea>
+        <hr>
+        <h3>Media Links</h3>
+        <ul class="list-group">
+            {% for x in medialinks %}
+            <li class="list-group-item">
+                <input type="hidden"><span><a href="{{x}}">{{x}}</a></span></li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <h3>External Page Links</h3>
+        <ul class="list-group">
+        	{% for x in otherlinks %}
+            <li class="list-group-item">
+                <input type="hidden"><span><a href="{{x}}">{{x}}</a></span></li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <h3>Notes</h3>
+        <textarea rows="4" name="notes">{{notes}}</textarea>
+    </div>
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

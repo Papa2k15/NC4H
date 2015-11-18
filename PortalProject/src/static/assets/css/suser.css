@@ -1,0 +1,11 @@
+div.page-header{
+  background-color:black;
+  border-bottom:2px solid red;
+  padding-left:20px;
+  padding-top:20px;
+}
+
+a{
+  font-size:x-large;
+}
+
