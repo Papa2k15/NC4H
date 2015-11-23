@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{pagename}}</title>
+    <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/css/user.css">
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1></h1></div>
+        <div class="row">
+        	<div class="col-md-6 col-md-offset-3">
+        		<h3>Page: {{pagename}} <small> NC4H Agent: {{nc4her}}</small></h3>
+            <form id="manageForm">
+            	<label>Method</label>
+            	<input type="text" class="form-control" value="{{wtd}}" readonly="readonly"/>
+            	<label>Text Source</label>
+            	<textarea rows="6" class="form-control">{{textsource}}</textarea>
+            	<label>Media Links</label>
+            	{% for x in medialinks %}
+            		<input type="text" class="form-control" value="{{x}}" name="medialink{{loop.index}}"/>
+            	{% endfor %}
+            	<label>Others Links</label>
+            	{% for x in otherlinks %}
+            		<input type="text" class="form-control" value="{{x}}" name="otherlink{{loop.index}}"/>
+            	{% endfor %}
+            	<label>Notes</label>
+            	<textarea rows="6" class="form-control">{{notes}}</textarea>
+            </form>
+            </div>
+        </div>
+        <div class="row form-group">
+        	<div class="col-md-offset-4">
+	        	<a href="/my_submissions" class="btn btn-default">Return</a>
+	        	<a href="#" class="btn btn-primary">Update This Submission</a>
+	        	<a href="#" class="btn btn-danger">Remove This Submission</a>
+        	</div>
+        </div>
+    </div>
+</body>
+</html>

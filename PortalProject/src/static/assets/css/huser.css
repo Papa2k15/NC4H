@@ -1,0 +1,53 @@
+h1 {
+	background-color: black;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	margin-top: 0px;
+	min-height: 100px;
+	width: 100%;
+	border-bottom: 5px solid red;
+}
+
+h1 small{
+	color: red;
+}
+
+div.container-fluid{
+	margin-top: 110px;
+}
+
+div.col-md-3 {
+	background-color: black;
+	color: white;
+	border-top: 2px solid red;
+	border-right: 2px solid red;
+	border-bottom: 2px solid red;
+}
+
+.row {
+	margin-top: 20px;
+}
+
+.fourhbutton{
+	width: 100%;
+	color: white;
+	background-color: red;
+	background-image: none;
+	text-align: center;
+	line-height: 5;
+	font-size: 60px;
+	border: 2px solid black;
+	min-height: 200px;
+}
+
+.fourhbutton:HOVER {
+	background-color: black;
+	color: white;
+}
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }

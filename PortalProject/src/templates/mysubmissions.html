@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nc4hsearch</title>
+    <title>View Submissions</title>
     <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/assets/css/user.css">
     <script src="../static/assets/js/jquery.min.js"></script>
@@ -14,10 +14,13 @@
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>PP: Search For User Data</h1></div>
-        <div class="row">
-            <div class="col-md-12">
-                <select class="input-lg form-control" name="nc4her">
+            <h1>Select Your Name Below</h1>
+                 <a href="/" class="btn btn-default"> Return To Main </a>    
+            </div>
+         <div class="row">
+         	       
+            <div class="col-md-6">
+                <select class="input-lg form-control" name="nc4her" id="nc4her">
                     <optgroup label="NC4H">
                         <option value="Sarah Kotzian" >Sarah Kotzian</option>
                         <option value="Amy Chilcote" >Amy Chilcote</option>
@@ -31,7 +34,7 @@
                         <option value="Gregory">Gregory Daniels</option>
                     </optgroup>
                 </select>
-                <button class="btn btn-default btn-block btn-lg" type="button" onclick="search()">Search </button>
+                <button class="btn btn-default btn-block btn-lg" type="button" onclick="search()">View Submissions</button>
                 <script type="text/javascript">
                 function search() {
                		  if (window.XMLHttpRequest) {
@@ -44,17 +47,46 @@
            		    	 	$('li').remove();
                		    	if (xmlhttp.responseText.length > 0){
                     		    $("ul#results").append(xmlhttp.responseText);
+               		    	} else {
+               		    		$("ul#results").append("<li class='list-group-item'>No Submissions</li>");
                		    	}
                		    }
                		  }
-               		  xmlhttp.open("GET","/finddata?nc4her="+$('select[name=nc4her]').val(),true);
+               		  xmlhttp.open("GET","/finddatat?nc4her="+$('select[name=nc4her]').val(),true);
                		  xmlhttp.send();
                		}
                 </script>
             </div>
+            <div class="col-md-6">
+                 <a href="#" class="btn btn-danger" id="removeall"> Remove All Submissions </a>    
+         	</div>
+         	<script type="text/javascript">
+         		$("a#removeall").click(function(){
+         			if (confirm("WARNING! You are about to remove all the submissions for: " + $("select[name=nc4her]").val() + " are you sure you want to proceed?")) {
+         				if (window.XMLHttpRequest) {
+                   		    xmlhttp=new XMLHttpRequest();
+                   		  } else {
+                   		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                   		  }
+                   		  xmlhttp.onreadystatechange=function() {
+                   		    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                   		    	if (xmlhttp.responseText === "Removed All"){
+                        		    alert("All Submissions for" + $('select[name=nc4her]').val() + " have been successfully removed!")
+                   		    	} else {
+                        		    alert("Error when removing, contact Greg via email: gldaniel@ncsu.edu")
+                   		    	}
+                   		    }
+                   		  }
+                   		  xmlhttp.open("GET","/remove_all?nc4her="+$('select[name=nc4her]').val(),true);
+                   		  xmlhttp.send();
+         			} else {
+         			    // Do nothing!
+         			}
+         		});
+         	</script> 
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <ul class="list-group" id="results">
 
                 </ul>
