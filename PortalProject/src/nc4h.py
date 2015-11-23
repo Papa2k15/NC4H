@@ -51,10 +51,12 @@ def sendtogreg():
     for x in request.form:
         if 'medialink' in x:
             medialinks.append(request.form[str(x)])
+    print medialinks
     otherlinks = []
     for x in request.form:
         if 'otherlink' in x:
             otherlinks.append(request.form[str(x)])
+    print otherlinks
     store_info(wtd,nc4her,textsource,notes,medialinks,otherlinks,pagename)
     return render_template('confirm.html',message="Successfully sent to Greg")
 
@@ -144,7 +146,7 @@ def finddataforuser():
             data = cur.fetchall()
             for x in data:
                 returnhtml += """
-                    <li class="list-group-item"><span><a href='/gregview/"""+str(x[0])+"""'>"""+str(x[0])+"""</a></span></li>
+                    <li class="list-group-item"><span><a href='/gregview/"""+str(x[0])+"""'>"""+str(x[0])+ " " + str(x[3]) + """</a></span></li>
                 """
             return returnhtml
     except lite.Error, e:
@@ -154,4 +156,4 @@ def finddataforuser():
             con.close()
     
 if __name__ == '__main__':
-    nc4h.run(debug=True)
+    nc4h.run(host='0.0.0.0',port=2000,debug=True)

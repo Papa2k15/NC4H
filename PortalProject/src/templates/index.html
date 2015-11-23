@@ -15,14 +15,14 @@
     <div class="container-fluid 4h-container">
         <div class="row header">
             <div class="col-md-12">
-                <h1><img src="../static/assets/img/210965.png" class="header-image">NC4H - Portal Project<img src="../static/assets/img/ncstate.png" class="header-image"></h1></div>
+                <h1><img src="../static/assets/img/210965.png" class="header-image">NC4H - Portal Project Form (v. 1.5.2) <img src="../static/assets/img/ncstate.png" class="header-image"></h1></div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <form id="4hform" action="/sendtogreg/" method="post">
                     <div class="row form-group">
                         <div class="col-md-12">
-                            <label>Select Your Name</label>
+                            <h2>Select Your Name</h2>
                             <select class="form-control" name="nc4her">
                                 <optgroup label="NC4H">
                                     <option value="Sarah Kotzian">Sarah Kotzian</option>
@@ -32,6 +32,9 @@
                                     <option value="Salim Oden">Salim Oden</option>
                                     <option value="Shannon McCollum">Shannon McCollum</option>
                                     <option value="Mitzi Downing">Mitzi Downing</option>
+                                </optgroup>
+                                <optgroup label="TEST">
+                                    <option value="Gregory">Gregory Daniels</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -73,7 +76,9 @@
                             <label>URL To Transfer From (Transfer Selection Only)</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><span>URL </span></div>
-                                <input class="form-control input-lg" type="url" id="transferurl" name="transferurl" placeholder="http://www.example.com/path/to/page" disabled="disabled">
+                                <input class="form-control input-lg" type="url" id="transferurl"
+                                name="transferurl" placeholder="http://www.example.com/path/to/page" disabled="disabled"
+                                data-toggle="tooltip" data-placement="top" title="Remember to click accept after placing URL here!">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default btn-lg" type="button" onclick="getTitle()" id="accept" disabled="disabled">Accept </button>
                                 </div>
@@ -85,7 +90,7 @@
                                  		  }
                                  		  if (window.XMLHttpRequest) {
                                  		    xmlhttp=new XMLHttpRequest();
-                                 		  } else { 
+                                 		  } else {
                                  		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
                                  		  }
                                  		  xmlhttp.onreadystatechange=function() {
@@ -93,6 +98,9 @@
                                  		    	if (xmlhttp.responseText.length > 0){
                                       		    	$("input[type='text']#pagename").val(xmlhttp.responseText);
                                  		    	}
+                                 		    } else if( xmlhttp.status== 500 ) {
+                                 		        var word = $("input[type='url']#transferurl").val().split("http://www.nc4h.org/").pop();
+                                 		        $("input[type='text']#pagename").val(word.charAt(0).toUpperCase() + word.substr(1));
                                  		    }
                                  		  }
                                  		  xmlhttp.open("GET","/getname/?transferurl="+$("input[type='url']#transferurl").val(),true);
@@ -126,18 +134,18 @@
                     		if($(this).val() == "everything"){
                     			if($(this).is(':checked')){
 	                    			$("textarea#textsource").prop('disabled',false);
-	                    			$("input[type='url']#medialink").prop('disabled',false);
+	                    			$("input[type='url']#medialink1").prop('disabled',false);
 	                    			$("button#moremedia").prop('disabled',false);
-	                    			$("input[type='url']#otherlink").prop('disabled',false);
+	                    			$("input[type='url']#otherlink1").prop('disabled',false);
 	                    			$("button#moreother").prop('disabled',false);
 	                    			$("input[type='checkbox']#text").prop('checked',true);
 	                    			$("input[type='checkbox']#media").prop('checked',true);
 	                    			$("input[type='checkbox']#links").prop('checked',true);
                     			} else {
                     				$("textarea#textsource").prop('disabled',true);
-	                    			$("input[type='url']#medialink").prop('disabled',true);
+	                    			$("input[type='url']#medialink1").prop('disabled',true);
 	                    			$("button#moremedia").prop('disabled',true);
-	                    			$("input[type='url']#otherlink").prop('disabled',true);
+	                    			$("input[type='url']#otherlink1").prop('disabled',true);
 	                    			$("button#moreother").prop('disabled',true);
 	                    			$("input[type='checkbox']#text").prop('checked',false);
 	                    			$("input[type='checkbox']#media").prop('checked',false);
@@ -153,19 +161,19 @@
                     		}
 							if($(this).val() == "media"){
 								if($(this).is(':checked')){
-									$("input[type='url']#medialink").prop('disabled',false);
+									$("input[type='url']#medialink1").prop('disabled',false);
 	                    			$("button#moremedia").prop('disabled',false);
                     			} else {
-                    				$("input[type='url']#medialink").prop('disabled',true);
+                    				$("input[type='url']#medialink1").prop('disabled',true);
 	                    			$("button#moremedia").prop('disabled',true);
                     			}
                     		}
 							if($(this).val() == "links"){
 								if($(this).is(':checked')){
-									$("input[type='url']#otherlink").prop('disabled',false);
+									$("input[type='url']#otherlink1").prop('disabled',false);
 	                    			$("button#moreother").prop('disabled',false);
                     			} else {
-                    				$("input[type='url']#otherlink").prop('disabled',true);
+                    				$("input[type='url']#otherlink1").prop('disabled',true);
 	                    			$("button#moreother").prop('disabled',true);
                     			}
 							}
@@ -175,7 +183,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Text (Source)</label>
+                                    <label>Text (Source- Remember Copy From &#60;artical&#62; to &#60;&#47;artical&#62;)</label>
                                 </div>
                             </div>
                             <textarea class="form-control" name="textsource" id="textsource" disabled="disabled"></textarea>
@@ -201,28 +209,35 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label>Media Links</label>
-                            <input class="form-control input-lg" type="url" name="medialink" id="medialink" placeholder="http://www.example.com/link/to/media" disabled="disabled">
-                            <button class="btn btn-default form-control" id="moremedia" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12">
+                                <label>Media Links (These are links to images and videos that exist somewhere on the web)</label>
+                                <div class="input-group media-1">
+                                    <div class="input-group-addon"><span>1</span></div>
+                                    <input class="form-control input-lg" type="url" name="medialink1" id="medialink1" placeholder="http://www.example.com/link/to/media" disabled="disabled">
+                                </div>
+                                <button class="btn btn-default form-control" id="moremedia" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
                         </div>
                         <script type="text/javascript">
                         	$('button#moremedia').click(function(){
-                                var n = $("input[type='url']#medialink").length;
-                        		$("<input class='form-control input-lg' type='url' name='medialink"+n+"' id='medialink"+n+"' placeholder='http://www.example.com/link/to/media'>").insertAfter("input[type='url']#medialink");
+                                var n = $("*[id*='medialink']").length;
+                        	    $("<div class='input-group media-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='url' name='medialink"+(n+1)+"' id='medialink"+(n+1)+"' placeholder='http://www.example.com/link/to/media'></div>").insertAfter("div.media-" + (n));
                         	});
                         </script>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="col-md-12">
                             <label>Other Links (These are just links to external locations, add more as necessary for this page)</label>
-                            <input class="form-control input-lg" type="url" name="otherlink" id="otherlink" placeholder="http://www.example.com/link/to/external/media" disabled="disabled">
+                                <div class="input-group other-1">
+                                    <div class="input-group-addon"><span>1</span></div>
+                                    <input class="form-control input-lg" type="url" name="otherlink1" id="otherlink1" placeholder="http://www.example.com/link/to/external/media" disabled="disabled">
+                                </div>
                             <button class="btn btn-default form-control" id="moreother" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
                         </div>
                          <script type="text/javascript">
                         	$('button#moreother').click(function(){
-                                var n = $("input[type='url']#otherlink").length;
-                        		$("<input class='form-control input-lg' type='url' name='otherlink"+n+"' id='otherlink"+n+"' placeholder='http://www.example.com/link/to/external/media'>").insertAfter("input[type='url']#otherlink");
+                                var n = $("*[id*='otherlink']").length;
+                        	    $("<div class='input-group other-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='url' name='otherlink"+(n+1)+"' id='otherlink"+(n+1)+"' placeholder='http://www.example.com/link/to/external/media'></div>").insertAfter("div.other-" + (n));
                         	});
                         </script>
                     </div>
@@ -239,7 +254,7 @@
     </div>
     <script type="text/javascript">
     	$(document).ready(function(){
-
+            $('[data-toggle="tooltip"]').tooltip();
     	});
     </script>
 </body>
