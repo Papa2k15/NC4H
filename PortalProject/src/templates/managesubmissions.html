@@ -17,32 +17,67 @@
             <h1></h1></div>
         <div class="row">
         	<div class="col-md-6 col-md-offset-3">
-        		<h3>Page: {{pagename}} <small> NC4H Agent: {{nc4her}}</small></h3>
-            <form id="manageForm">
+        		<h6>PAGE ID: {{pageid}}</h6>
+        		<h3>Page: {{pagename}} <small> Created by: {{nc4her}}</small></h3>
+            <form id="manageForm" action="/update_sub" method="post">
+            	<input type="hidden" name="pageid" value="{{pageid}}"/>
+            	<label>Page Name</label>
+            	<input type="text" name="pagename" class="form-control" value="{{pagename}}"/>
             	<label>Method</label>
-            	<input type="text" class="form-control" value="{{wtd}}" readonly="readonly"/>
+            	<input type="text" name="wtd" class="form-control" value="{{wtd}}" readonly="readonly"/>
             	<label>Text Source</label>
-            	<textarea rows="6" class="form-control">{{textsource}}</textarea>
+            	<textarea rows="6" name="textsource" class="form-control">{{textsource}}</textarea>
             	<label>Media Links</label>
+            	{% if medialinks|length > 0 %}
             	{% for x in medialinks %}
-            		<input type="text" class="form-control" value="{{x}}" name="medialink{{loop.index}}"/>
+            		<input type="text" class="form-control" value="{{x}}" id="medialink{{loop.index}}" name="medialink{{loop.index}}"/>
             	{% endfor %}
+            	{% else %}
+            		<input type="text" class="form-control" id="medialink1" name="medialink1"/>
+            	{% endif %}
+                 <button class="btn btn-default form-control" id="moremedia" type="button" ><span class="glyphicon glyphicon-plus"></span></button>
+            	 <script type="text/javascript">
+                	$('button#moremedia').click(function(){
+                        var n = $("*[id*='medialink']").length;
+                   	    $("<input class='form-control' type='text' name='medialink"+(n+1)+"' id='medialink"+(n+1)+"' placeholder='http://www.example.com/link/to/media'>").insertAfter("input[type='text']#medialink" + (n));
+                	});
+                </script>
             	<label>Others Links</label>
+            	{% if otherlinks|length > 0 %}
             	{% for x in otherlinks %}
-            		<input type="text" class="form-control" value="{{x}}" name="otherlink{{loop.index}}"/>
+            		<input type="text" class="form-control" value="{{x}}" id="otherlink{{loop.index}}" name="otherlink{{loop.index}}"/>
             	{% endfor %}
+            	{% else %}
+            		<input type="text" class="form-control" id="otherlink1" name="otherlink1"/>
+            	{% endif %}
+                <button class="btn btn-default form-control" id="moreother" type="button"> <span class="glyphicon glyphicon-plus"></span></button>
+            	<script type="text/javascript">
+                   	$('button#moreother').click(function(){
+                           var n = $("*[id*='otherlink']").length;
+                   	    $("<input class='form-control' type='text' name='otherlink"+(n+1)+"' id='otherlink"+(n+1)+"' placeholder='http://www.example.com/link/to/external/media'>").insertAfter("input[type='text']#otherlink" + (n));
+                   	});
+                </script>
             	<label>Notes</label>
-            	<textarea rows="6" class="form-control">{{notes}}</textarea>
+            	<textarea rows="6" class="form-control" name="notes">{{notes}}</textarea>
             </form>
             </div>
         </div>
         <div class="row form-group">
         	<div class="col-md-offset-4">
 	        	<a href="/my_submissions" class="btn btn-default">Return</a>
-	        	<a href="#" class="btn btn-primary">Update This Submission</a>
-	        	<a href="#" class="btn btn-danger">Remove This Submission</a>
+	        	<a id="update" href="#" class="btn btn-primary">Update This Submission</a>
+	        	<a id="remove" href="#" class="btn btn-danger">Remove This Submission</a>
         	</div>
         </div>
+        <script type="text/javascript">
+        	$("a#update").click(function() {
+       			$("form#manageForm").submit();
+        	});
+        	$("a#remove").click(function() {
+        		$("form#manageForm").attr("action", "/remove_submission");
+       			$("form#manageForm").submit();
+        	});
+        </script>
     </div>
 </body>
 </html>

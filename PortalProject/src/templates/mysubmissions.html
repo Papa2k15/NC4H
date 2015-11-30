@@ -56,9 +56,34 @@
                		  xmlhttp.send();
                		}
                 </script>
+                <ul class="list-group" id="results">
+
+                </ul>
             </div>
             <div class="col-md-6">
-                 <a href="#" class="btn btn-danger" id="removeall"> Remove All Submissions </a>    
+	            {% if "Success" in message %}
+	            	 <div class="alert alert-success">
+					  <strong>Success!</strong> That submission was successfully updated.
+					</div>
+				{% endif %}
+				 <div class="well">
+				 	Please make sure that you are only
+                 modifying your information.Look at the name selector carefully on the left. Once you see
+                 your name, click on it and then select view submissions. You will get a list of all
+                 submitted information. Just click on the link that pops up and it will take you
+                 to the form that you submitted where you can update. 
+                 	<p>
+                 Before hitting the
+                 button below please be sure that you are sure because it will remove all submissions for selected person. 
+                 I plan to later have a login method that doesn't allow this but for now this is in your hands.
+				 	</p>
+				 </div>
+                 <a href="#" class="btn btn-danger" id="removeall"> REMOVE ALL SUBMISSIONS for </a>
+                 <script type="text/javascript">
+                 	$("select#nc4her").change(function(){
+                 		$("a#removeall").text("REMOVE ALL SUBMISSIONS for " + $('select[name=nc4her]').val());
+                 	});
+                 </script>    
          	</div>
          	<script type="text/javascript">
          		$("a#removeall").click(function(){
@@ -85,13 +110,12 @@
          		});
          	</script> 
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <ul class="list-group" id="results">
-
-                </ul>
-            </div>
-        </div>
+        
     </div>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+     		$("a#removeall").text("REMOVE ALL SUBMISSIONS for " + $('select[name=nc4her]').val());
+    	});
+    </script>
 </body>
 </html>

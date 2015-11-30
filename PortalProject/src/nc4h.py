@@ -56,12 +56,10 @@ def sendtogreg():
     for x in request.form:
         if 'medialink' in x:
             medialinks.append(request.form[str(x)])
-    print medialinks
     otherlinks = []
     for x in request.form:
         if 'otherlink' in x:
             otherlinks.append(request.form[str(x)])
-    print otherlinks
     store_info(wtd,nc4her,textsource,notes,medialinks,otherlinks,pagename)
     return render_template('confirm.html',message="Thats all you have to do, your information was successfully sent to Greg")
 
@@ -249,12 +247,93 @@ def theirview(pageid=None):
                 otherlinks.append(o[1])
             return render_template('managesubmissions.html',wtd=wtd,nc4her=nc4her,textsource=textsource,
                            notes=notes,medialinks=medialinks,otherlinks=otherlinks,
-                           pagename=pagename)
+                           pagename=pagename, pageid=pageid)
     except lite.Error, e:
         return str(e)
     finally:
         if con:
             con.close()
+
+@nc4h.route('/update_sub', methods=["POST"])
+def update_submission():
+    pageid = None
+    if 'pageid' in request.form:
+        pageid = request.form['pageid']
+    pagename = None
+    if 'pagename' in request.form:
+        pagename = request.form['pagename']
+    wtd = None
+    if 'wtd' in request.form:
+        wtd = request.form['wtd']
+    nc4her = None
+    if 'nc4her' in request.form:
+        nc4her =  request.form['nc4her']
+    textsource = None
+    if 'textsource' in request.form:
+        textsource = request.form['textsource']
+    notes = None
+    if 'notes' in request.form:
+        notes = request.form['notes']
+    medialinks = []
+    for x in request.form:
+        if 'medialink' in x:
+            medialinks.append(request.form[str(x)])
+    otherlinks = []
+    for x in request.form:
+        if 'otherlink' in x:
+            otherlinks.append(request.form[str(x)])
+    message = update(pageid,pagename, wtd,nc4her,textsource,notes,medialinks,otherlinks)
+    return render_template('mysubmissions.html',message=message)
+
+def update(pageid,pagename,wtd,nc4her,textsource,notes,medialinks,otherlinks):
+    con = None
+    try:
+        con = lite.connect(DATABASE)
+        with con:
+            con.rollback()
+            cur = con.cursor()
+            cur.execute("UPDATE page SET pagename=?,wtd=?,textsource=?,notes=? WHERE pageid = ?", (pagename,wtd,textsource,notes,pageid))
+            cur.execute("DELETE FROM medialinks WHERE pageid = ?", (pageid))
+            cur.execute("DELETE FROM otherlinks WHERE pageid = ?", (pageid))
+            con.commit()
+            if len(medialinks) > 0:
+                for x in medialinks:  
+                    cur.execute("INSERT INTO medialinks (link,pageid) VALUES (?,?)", (x,pageid))
+                con.commit()
+            if len(otherlinks) > 0:
+                for x in otherlinks:  
+                    cur.execute("INSERT INTO otherlinks (link,pageid) VALUES (?,?)", (x,pageid))
+                con.commit()
+        return "Successfully Updated"
+    except lite.Error, e:
+        return str(e)
+    finally:
+        if con:
+            con.close()
+
+def remove(pageid):
+    con = None
+    try:
+        con = lite.connect(DATABASE)
+        with con:
+            con.rollback()
+            cur = con.cursor()
+            cur.execute("DELETE FROM page WHERE pageid = ?", (pageid,))
+            cur.execute("DELETE FROM medialinks WHERE pageid = ?", (pageid,))
+            cur.execute("DELETE FROM otherlinks WHERE pageid = ?", (pageid,))
+            con.commit()
+            return "Successfully Removed"
+    except lite.Error, e:
+        return str(e)
+    finally:
+        if con:
+            con.close()
+                
+@nc4h.route('/remove_submission', methods=["POST"])
+def remove_sub():
+    pageid = request.form['pageid']
+    message = remove(pageid)
+    return render_template('mysubmissions.html',message=message)
 
 if __name__ == '__main__':
     nc4h.run(host='0.0.0.0',port=2000,debug=True)

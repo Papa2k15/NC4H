@@ -75,7 +75,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label>URL To Transfer From (Transfer Selection Only)</label>
+                            <label>URL To Transfer From (Transfer Selection Only, PAGE NAME should be filled in)</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><span>URL </span></div>
                                 <input class="form-control input-lg" type="url" id="transferurl"
@@ -216,7 +216,7 @@
                                 <label>Media Links (These are links to images and videos that exist somewhere on the web)</label>
                                 <div class="input-group media-1">
                                     <div class="input-group-addon"><span>1</span></div>
-                                    <input class="form-control input-lg" type="url" name="medialink1" id="medialink1" placeholder="http://www.example.com/link/to/media" disabled="disabled">
+                                    <input class="form-control input-lg" type="text" name="medialink1" id="medialink1" placeholder="http://www.example.com/link/to/media" disabled="disabled">
                                 </div>
                                 <button class="btn btn-default form-control" id="moremedia" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
                             </div>
@@ -224,7 +224,7 @@
                         <script type="text/javascript">
                         	$('button#moremedia').click(function(){
                                 var n = $("*[id*='medialink']").length;
-                        	    $("<div class='input-group media-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='url' name='medialink"+(n+1)+"' id='medialink"+(n+1)+"' placeholder='http://www.example.com/link/to/media'></div>").insertAfter("div.media-" + (n));
+                        	    $("<div class='input-group media-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='text' name='medialink"+(n+1)+"' id='medialink"+(n+1)+"' placeholder='http://www.example.com/link/to/media'></div>").insertAfter("div.media-" + (n));
                         	});
                         </script>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -232,16 +232,17 @@
                             <label>Other Links (These are just links to external locations, add more as necessary for this page)</label>
                                 <div class="input-group other-1">
                                     <div class="input-group-addon"><span>1</span></div>
-                                    <input class="form-control input-lg" type="url" name="otherlink1" id="otherlink1" placeholder="http://www.example.com/link/to/external/media" disabled="disabled">
+                                    <input class="form-control input-lg" type="text" name="otherlink1" id="otherlink1" placeholder="http://www.example.com/link/to/external/media" disabled="disabled">
                                 </div>
                             <button class="btn btn-default form-control" id="moreother" type="button" disabled="disabled"> <span class="glyphicon glyphicon-plus"></span></button>
                         </div>
                          <script type="text/javascript">
                         	$('button#moreother').click(function(){
                                 var n = $("*[id*='otherlink']").length;
-                        	    $("<div class='input-group other-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='url' name='otherlink"+(n+1)+"' id='otherlink"+(n+1)+"' placeholder='http://www.example.com/link/to/external/media'></div>").insertAfter("div.other-" + (n));
+                        	    $("<div class='input-group other-"+(n+1)+"'><div class='input-group-addon'><span>"+(n+1)+"</span></div><input class='form-control input-lg' type='text' name='otherlink"+(n+1)+"' id='otherlink"+(n+1)+"' placeholder='http://www.example.com/link/to/external/media'></div>").insertAfter("div.other-" + (n));
                         	});
                         </script>
+                    </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
